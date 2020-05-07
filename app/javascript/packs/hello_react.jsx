@@ -6,13 +6,28 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
+let musics = [
+  'Jazz',
+  'Kpop',
+  'Tango'
+]
+
+function getSelf(e) {
+  return () => { console.log(e) }
+}
+
+const makeList = (array) => {
+  return array.map(el => <li onClick={ getSelf(el) }>{el}</li>)
+}
+
 const Hello = props => (
   <div>
-    <h1>Hello {props.name}!</h1>
+    <h1 onClick={clickHandler} >Hello {props.name}!</h1>
     <ul>
-      <li>apple</li>
-      <li>banana</li>
-      <li>cherry</li>
+      { 
+        // props.musics.map(el => <li>{el}</li>)
+        makeList(props.musics)
+      }
     </ul>  
   </div>
 )
@@ -27,7 +42,17 @@ Hello.propTypes = {
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
+    // <Hello name="React" />,
+    <Hello name="5xReact" musics={musics} />,
+    // document.body.appendChild(document.createElement('div')),
+    document.querySelector('#container')
   )
 })
+
+
+function clickHandler() {
+  alert('Hi React!!')
+}
+function overHandler() {
+  console.log('AAA')
+}
