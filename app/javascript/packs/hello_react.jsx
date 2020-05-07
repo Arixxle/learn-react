@@ -2,11 +2,11 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import React from 'react'
+import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-let musics = [
+let musicsDB = [
   'Jazz',
   'Kpop',
   'Tango'
@@ -19,43 +19,49 @@ const Item = (props) => {
   let m = props.music
   return <li onClick={ getSelf(m) }>{m}</li>
 }
-const makeList = (array) => {
-  return array.map(el => <li onClick={ getSelf(el) }>{el}</li>)
-}
 
 const ItemList = (props) => {
   return props.musics.map(m => <Item music={m} />)
 }
 
-const Hello = props => (
-  <div>
-    <h1 onClick={clickHandler} >Hello {props.name}!</h1>
-    <h2>{props.hehe}</h2>
-    <ItemList musics={musics} />
-  </div>
-)
 
-Hello.defaultProps = {
-  name: 'David'
+const ItemInput = props => {
+  let [music, setMusic] = useState('')
+
+  return (
+    <div>
+      <input type="text" 
+             value={music} 
+             onChange={evt => setMusic(evt.target.value) } />
+      <button onClick={() => {
+        props.addMusic(music)
+        setMusic('')
+      }}>Add music</button>
+    </div>
+  )
 }
 
-Hello.propTypes = {
-  name: PropTypes.string
+let appStyle = {
+  color: 'red'
+}
+
+
+const Hello = props => {
+  const [musics, setMusic] = useState(musicsDB)
+  const appendMusic = (newMusic) => {
+    setMusic([...musics, newMusic])
+  }
+  <div>
+    <h1 onClick={clickHandler} >Hello {props.name}!</h1>
+    <h2 style={appStyle}>{props.hehe}</h2>
+    <ItemList musics={musics} />
+    <ItemInput addMusic={appendMusic}/>
+  </div>
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    // <Hello name="React" />,
-    <Hello name="5xReact" musics={musics} hehe="Hehehe" />,
-    // document.body.appendChild(document.createElement('div')),
+    <Hello name="5xReact" hehe="Hehehe" />,
     document.querySelector('#container')
   )
 })
-
-
-function clickHandler() {
-  alert('Hi React!!')
-}
-function overHandler() {
-  console.log('AAA')
-}
