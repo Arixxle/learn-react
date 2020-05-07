@@ -51,12 +51,14 @@ const Hello = props => {
   const appendMusic = (newMusic) => {
     setMusic([...musics, newMusic])
   }
-  <div>
-    <h1 onClick={clickHandler} >Hello {props.name}!</h1>
+  return(
+    <div>
+    <h1>Hello {props.name}!</h1>
     <h2 style={appStyle}>{props.hehe}</h2>
     <ItemList musics={musics} />
     <ItemInput addMusic={appendMusic}/>
   </div>
+  )
 }
 
 document.addEventListener('DOMContentLoaded', () => {
