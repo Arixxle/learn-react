@@ -15,20 +15,23 @@ let musics = [
 function getSelf(e) {
   return () => { console.log(e) }
 }
-
+const Item = (props) => {
+  let m = props.music
+  return <li onClick={ getSelf(m) }>{m}</li>
+}
 const makeList = (array) => {
   return array.map(el => <li onClick={ getSelf(el) }>{el}</li>)
+}
+
+const ItemList = (props) => {
+  return props.musics.map(m => <Item music={m} />)
 }
 
 const Hello = props => (
   <div>
     <h1 onClick={clickHandler} >Hello {props.name}!</h1>
-    <ul>
-      { 
-        // props.musics.map(el => <li>{el}</li>)
-        makeList(props.musics)
-      }
-    </ul>  
+    <h2>{props.hehe}</h2>
+    <ItemList musics={musics} />
   </div>
 )
 
@@ -43,7 +46,7 @@ Hello.propTypes = {
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     // <Hello name="React" />,
-    <Hello name="5xReact" musics={musics} />,
+    <Hello name="5xReact" musics={musics} hehe="Hehehe" />,
     // document.body.appendChild(document.createElement('div')),
     document.querySelector('#container')
   )
